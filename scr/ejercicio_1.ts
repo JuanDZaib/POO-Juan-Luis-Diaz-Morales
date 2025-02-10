@@ -1,10 +1,10 @@
 class Car{
-    protected nombre: string;
-    protected sexo:string;
-    protected edad:number;
-    protected peso:number;
-    protected color:string;
-    protected textura:string;
+    private nombre: string;
+    private sexo:string;
+    private edad:number;
+    private peso:number;
+    private color:string;
+    private textura:string;
 //miau aaaa
 //gato 
     constructor(nombre:string,sexo:string,peso:number,edad:number,color:string,textura:string){
