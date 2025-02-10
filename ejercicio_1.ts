@@ -5,7 +5,7 @@ class Car{
     protected peso:number;
     protected color:string;
     protected textura:string;
-
+//miau
     constructor(nombre:string,sexo:string,peso:number,edad:number,color:string,textura:string){
     this.nombre=nombre;
     this.sexo=sexo;
