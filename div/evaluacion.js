@@ -44,13 +44,13 @@ var InventarioManager = /** @class */ (function () {
     InventarioManager.prototype.venderProducto = function (id, stock) {
         var producto = this.consultarProducto(id);
         if (producto && producto.reducirStock(stock)) {
-            return "venta de ".concat(stock, " unidades de ").concat(producto.nombre, " vendidas");
+            return "\nventa de ".concat(stock, " unidades de ").concat(producto.nombre, " vendidas");
         }
         return "No hay stock de ".concat(producto === null || producto === void 0 ? void 0 : producto.nombre);
     };
     InventarioManager.prototype.mostrarInventario = function () {
         this.productos.forEach(function (p) {
-            console.log("Cantidad           Nombre\n".concat(p.stock, "        ").concat(p.nombre));
+            console.log("\nCantidad           Nombre\n".concat(p.stock, "        ").concat(p.nombre));
         });
     };
     return InventarioManager;
