@@ -5,6 +5,21 @@
 4. Se debe de guardar en memoria para poder hacer operaciones de aumento, resta, consulta en el numero de productos.
 4. Procura que tu codigo tenga calidad.
 5. Coloca como forma de comentarios en tus clases el por que las creaste.*/
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 //En esta clase implementamos nuestra interfaz, aqui le damos sentido a como funcionaran los productos (en el inventario) y sus propiedades
 //implementando un metodo para agregar y otro para quitar o reducir el stock de productos.
 var Producto = /** @class */ (function () {
@@ -44,26 +59,59 @@ var InventarioManager = /** @class */ (function () {
     InventarioManager.prototype.venderProducto = function (id, stock) {
         var producto = this.consultarProducto(id);
         if (producto && producto.reducirStock(stock)) {
-            return "\nventa de ".concat(stock, " unidades de ").concat(producto.nombre, " vendidas");
+            return "venta de ".concat(stock, " unidades de ").concat(producto.nombre, " vendidas");
         }
         return "No hay stock de ".concat(producto === null || producto === void 0 ? void 0 : producto.nombre);
     };
     InventarioManager.prototype.mostrarInventario = function () {
         this.productos.forEach(function (p) {
-            console.log("\nCantidad           Nombre\n".concat(p.stock, "        ").concat(p.nombre));
+            console.log("Cantidad           Nombre\n".concat(p.stock, "        ").concat(p.nombre));
         });
     };
     return InventarioManager;
 }());
+//Esta clase hija de la clase producto cuenta con un atributo especial para los aparatos electronicos, el cual 
+//verifica si tiene garantia o no, basado en ello envia un mensaje al igual que aplicar el poliformismo en el metodo de reducir el stock
+//ya que al momento de venderlo define si cuenta con garantia o no
+var ProductoElectronico = /** @class */ (function (_super) {
+    __extends(ProductoElectronico, _super);
+    function ProductoElectronico(id, nombre, stock, precio, garantia) {
+        var _this = _super.call(this, id, nombre, precio, stock) || this;
+        _this.garantia = garantia;
+        return _this;
+    }
+    ProductoElectronico.prototype.reducirStock = function (stock) {
+        console.log("Procesando garantia de prodcto");
+        if (this.garantia) {
+            console.log('Este producto si cuenta con garantia');
+        }
+        else {
+            console.log('Este producto no tiene garantia');
+        }
+        return _super.prototype.reducirStock.call(this, stock);
+    };
+    ProductoElectronico.prototype.comprobanteGarantia = function () {
+        return this.garantia ? "producto con garantia" : "producto sin garantia";
+    };
+    return ProductoElectronico;
+}(Producto));
 var inventario = new InventarioManager();
 var libreta = new Producto(1, 'libreta de ben 10', 54, 100);
 var goma = new Producto(2, 'Goma marca pelicano', 6, 200);
 var lampara = new Producto(3, 'payasito lampara servilletero', 200, 34);
+var calculadora = new ProductoElectronico(4, 'calculadora', 39, 58, false);
+var audifonos = new ProductoElectronico(5, 'audifonos', 39, 58, true);
 inventario.agregarProducto(libreta);
 inventario.agregarProducto(goma);
 inventario.agregarProducto(lampara);
+inventario.agregarProducto(calculadora);
+inventario.agregarProducto(audifonos);
 inventario.mostrarInventario();
 console.log(inventario.venderProducto(2, 1));
 console.log(inventario.venderProducto(3, 1));
 console.log(inventario.venderProducto(3, 4));
+console.log(inventario.venderProducto(4, 1));
+console.log(inventario.venderProducto(5, 1));
 inventario.mostrarInventario();
+console.log(calculadora.comprobanteGarantia());
+console.log(audifonos.comprobanteGarantia());

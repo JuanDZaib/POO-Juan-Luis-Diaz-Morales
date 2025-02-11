@@ -62,19 +62,52 @@ class InventarioManager{
 
 }
 
+//Esta clase hija de la clase producto cuenta con un atributo especial para los aparatos electronicos, el cual 
+//verifica si tiene garantia o no, basado en ello envia un mensaje al igual que aplicar el poliformismo en el metodo de reducir el stock
+//ya que al momento de venderlo define si cuenta con garantia o no
+class ProductoElectronico extends Producto{
+    public garantia:boolean;
+    constructor(id:number,nombre:string,stock:number,precio:number,garantia:boolean){
+        super(id,nombre,precio,stock)
+        this.garantia=garantia;
+    }
+reducirStock(stock: number): boolean {
+    console.log(`Procesando garantia de prodcto`)
+    if(this.garantia){
+        console.log('Este producto si cuenta con garantia');
+    }else{
+        console.log('Este producto no tiene garantia');
+    }
+    return super.reducirStock(stock);
+}    
+comprobanteGarantia():string{
+    return this.garantia?"producto con garantia":"producto sin garantia";
+}
+
+}
+
 const inventario=new InventarioManager();
 
 const libreta =new Producto(1,'libreta de ben 10',54,100);
 const goma=new Producto(2,'Goma marca pelicano',6,200);
 const lampara=new Producto(3,'payasito lampara servilletero',200,34);
+const calculadora=new ProductoElectronico(4,'calculadora',39,58,false);
+const audifonos=new ProductoElectronico(5,'audifonos',39,58,true);
 
 inventario.agregarProducto(libreta);
 inventario.agregarProducto(goma);
 inventario.agregarProducto(lampara);
+inventario.agregarProducto(calculadora);
+inventario.agregarProducto(audifonos);
 inventario.mostrarInventario();
 
 console.log(inventario.venderProducto(2,1));
 console.log(inventario.venderProducto(3,1));
 console.log(inventario.venderProducto(3,4));
+console.log(inventario.venderProducto(4,1));
+console.log(inventario.venderProducto(5,1));
+
 
 inventario.mostrarInventario()
+console.log(calculadora.comprobanteGarantia())
+console.log(audifonos.comprobanteGarantia())
