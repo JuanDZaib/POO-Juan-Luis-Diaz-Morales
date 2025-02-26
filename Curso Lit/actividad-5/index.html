@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Lit + TS</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+      }
+      app-header {
+        flex-shrink: 0; /* Evita que el header se encoja */
+      }
+      app-section {
+        flex-grow: 1; /* Ocupa el espacio restante */
+      }
+      app-footer {
+        flex-shrink: 0; /* Evita que el footer se encoja */
+      }
+    </style>
+    <script type="module" src="/src/my-form.ts"></script>
+    <script type="module" src="/src/app-page.ts"></script>
+  </head>
+  <body>
+    <my-form></my-form>
+  </body>
+</html>
